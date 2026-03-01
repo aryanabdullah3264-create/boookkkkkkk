@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Contact | BookConvert Pro</title>
+<meta id="metaDesc" name="description" content="Contact | BookConvert Pro">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#07070d;--s1:#0f0f1a;--s2:#16162a;--br:#252538;--ink:#f0eee8;--i2:#7a78a0;--ac:#7c6af7;--al:#a89df9;--go:#f7c26a;--rd:#f74a4a;--gn:#4af7a0}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font-family:'DM Sans',sans-serif;min-height:100vh;overflow-x:hidden}
+body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;background:radial-gradient(ellipse 70% 50% at 15% 15%,rgba(124,106,247,.07),transparent),radial-gradient(ellipse 60% 40% at 85% 85%,rgba(247,194,106,.05),transparent)}
+
+/* TOAST */
+#toast{position:fixed;top:76px;left:50%;transform:translateX(-50%) translateY(-8px);background:var(--rd);color:#fff;font-size:13px;font-weight:600;padding:10px 20px;border-radius:50px;z-index:9999;opacity:0;transition:all .3s;white-space:nowrap;pointer-events:none}
+#toast.on{opacity:1;transform:translateX(-50%) translateY(0)}
+
+/* HEADER */
+header{position:fixed;top:0;left:0;right:0;z-index:800;height:64px;padding:0 28px;display:flex;align-items:center;background:rgba(7,7,13,.93);backdrop-filter:blur(18px);border-bottom:1px solid var(--br)}
+.hd{max-width:1100px;margin:0 auto;width:100%;display:flex;align-items:center}
+.logo{font-family:'Syne',sans-serif;font-size:21px;font-weight:800;color:var(--ink);text-decoration:none;letter-spacing:-.5px}
+.logo span{color:var(--ac)}
+nav{display:flex;align-items:center;gap:2px;margin-left:auto}
+[dir=rtl] nav{flex-direction:row-reverse}
+nav a{color:var(--i2);text-decoration:none;font-size:13px;font-weight:500;padding:6px 13px;border-radius:8px;transition:all .2s}
+nav a:hover{color:var(--ink);background:var(--s2)}
+nav a.active{color:var(--ac)}
+
+/* LANG SWITCHER */
+.lw{position:relative;margin-left:10px}
+.lt{display:flex;align-items:center;gap:6px;background:var(--s2);border:1.5px solid var(--br);border-radius:8px;padding:6px 12px;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:600;color:var(--i2);transition:all .2s;white-space:nowrap;outline:none}
+.lt:hover,.lt.open{border-color:var(--ac);color:var(--ac)}
+.caret{font-size:9px;transition:transform .2s;display:inline-block}
+.lt.open .caret{transform:rotate(180deg)}
+.lp{position:absolute;top:calc(100% + 8px);right:0;background:var(--s1);border:1.5px solid var(--br);border-radius:14px;display:none;width:220px;box-shadow:0 16px 56px rgba(0,0,0,.8);max-height:72vh;overflow-y:auto;z-index:999}
+[dir=rtl] .lp{right:auto;left:0}
+.lp.open{display:block;animation:sd .18s ease}
+@keyframes sd{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
+.lgl{padding:8px 14px 4px;font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--i2);background:var(--s2);border-bottom:1px solid var(--br)}
+.li{display:flex;align-items:center;gap:9px;padding:10px 14px;cursor:pointer;font-size:13px;border-bottom:1px solid rgba(255,255,255,.04);transition:background .15s;color:var(--ink)}
+.li:last-child{border-bottom:none}
+.li:hover{background:var(--s2)}
+.li.active{color:var(--ac);font-weight:700}
+.lf{font-size:16px}.ln{font-size:10px;color:var(--i2);margin-left:auto}
+.lp::-webkit-scrollbar{width:4px}.lp::-webkit-scrollbar-thumb{background:var(--br);border-radius:4px}
+
+/* LAYOUT */
+.wrap{position:relative;z-index:1;padding-top:64px}
+.con{max-width:660px;margin:0 auto;padding:0 20px}
+@keyframes ri{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+
+/* HERO */
+.hero{padding:60px 20px 40px;text-align:center}
+.badge{display:inline-flex;align-items:center;gap:8px;background:rgba(124,106,247,.1);border:1px solid rgba(124,106,247,.25);color:var(--al);font-size:10px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;padding:6px 16px;border-radius:50px;margin-bottom:24px}
+.hero h1{font-family:'Syne',sans-serif;font-size:clamp(30px,6vw,56px);font-weight:800;line-height:1.03;letter-spacing:-1.5px;margin-bottom:14px}
+.hero h1 em{font-style:normal;background:linear-gradient(135deg,var(--ac),var(--al));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hsub{font-size:15px;color:var(--i2);max-width:440px;margin:0 auto;line-height:1.75}
+
+/* CARDS */
+.card{background:var(--s1);border:1px solid var(--br);border-radius:14px;padding:26px;margin-bottom:14px;box-shadow:0 2px 24px rgba(0,0,0,.5);position:relative;overflow:hidden}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(124,106,247,.25),transparent)}
+.sl{font-size:9px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--i2);margin-bottom:18px;display:flex;align-items:center;gap:10px}
+.sl::after{content:'';flex:1;height:1px;background:var(--br)}
+
+/* INPUTS */
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
+.iw{position:relative}
+.ico{position:absolute;left:13px;top:50%;transform:translateY(-50%);font-size:14px;pointer-events:none;z-index:1}
+[dir=rtl] .ico{left:auto;right:13px}
+input[type=text],input[type=email],input[type=url]{width:100%;background:var(--s2);border:1.5px solid var(--br);border-radius:10px;padding:13px 13px 13px 40px;font-family:'DM Sans',sans-serif;font-size:13.5px;color:var(--ink);outline:none;transition:all .2s;display:block}
+[dir=rtl] input{padding:13px 40px 13px 13px}
+input:focus{border-color:var(--ac);box-shadow:0 0 0 3px rgba(124,106,247,.12)}
+input::placeholder{color:#35354a}
+input.err{border-color:var(--rd)!important;animation:shk .35s ease}
+input.ok{border-color:var(--gn)!important}
+@keyframes shk{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+textarea{width:100%;background:var(--s2);border:1.5px solid var(--br);border-radius:10px;padding:13px;font-family:'DM Sans',sans-serif;font-size:13.5px;color:var(--ink);resize:vertical;outline:none;line-height:1.65;transition:all .2s;min-height:88px}
+textarea:focus{border-color:var(--ac);box-shadow:0 0 0 3px rgba(124,106,247,.12)}
+textarea::placeholder{color:#35354a}
+
+/* EMAIL HINT */
+.ehint{display:none;position:absolute;bottom:calc(100% + 8px);left:0;background:var(--s2);border:1px solid var(--ac);border-radius:8px;padding:7px 12px;font-size:11.5px;color:var(--al);z-index:20;pointer-events:none;white-space:nowrap}
+.ehint::after{content:'';position:absolute;top:100%;left:16px;border:5px solid transparent;border-top-color:var(--ac)}
+
+/* FORMAT CARDS */
+.fmts{display:flex;gap:12px}
+.fo{flex:1;border:2px solid var(--br);border-radius:14px;padding:24px 12px;text-align:center;transition:all .2s;background:var(--s2);cursor:pointer;user-select:none}
+.fo:hover{border-color:var(--al)}
+.fo.sel{border-color:var(--ac);background:rgba(124,106,247,.1);box-shadow:0 0 0 3px rgba(124,106,247,.12)}
+.fo .ic{font-size:38px;margin-bottom:10px;display:block;pointer-events:none}
+.fo .nm{font-family:'Syne',sans-serif;font-size:17px;font-weight:700;color:var(--ink);display:block;pointer-events:none}
+.fo .ex{font-size:11px;color:var(--i2);margin-top:4px;display:block;pointer-events:none}
+
+/* FILE UPLOAD */
+.dz{border:2px dashed var(--br);border-radius:12px;padding:24px 16px;text-align:center;cursor:pointer;transition:all .25s;background:var(--s2);margin-top:12px}
+.dz:hover{border-color:var(--ac);background:rgba(124,106,247,.04)}
+.fp,.fdrm{display:none;margin-top:12px;border-radius:10px;padding:12px 16px;align-items:center;gap:12px}
+.fp.on{display:flex;background:rgba(74,247,160,.06);border:1.5px solid rgba(74,247,160,.3)}
+.fdrm.on{display:flex;background:rgba(247,74,74,.06);border:1.5px solid rgba(247,74,74,.3)}
+
+/* BUTTON */
+.btn{width:100%;border:none;border-radius:12px;padding:17px;font-family:'Syne',sans-serif;font-size:16px;font-weight:700;cursor:pointer;transition:all .3s;display:flex;align-items:center;justify-content:center;gap:10px;letter-spacing:-.2px}
+.btn:disabled{opacity:.5;cursor:not-allowed!important;transform:none!important}
+.bac{background:linear-gradient(135deg,var(--ac),#5a47e8);color:#fff;box-shadow:0 4px 24px rgba(124,106,247,.35)}
+.bac:hover:not(:disabled){transform:translateY(-2px);box-shadow:0 8px 32px rgba(124,106,247,.5)}
+
+/* PROGRESS */
+.pw{display:none;margin-top:14px}
+.pw.on{display:block}
+.ptop{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+.plbl{font-size:12px;color:var(--i2)}
+.ppct{font-size:12px;font-weight:700;color:var(--ac);font-family:'Syne',sans-serif}
+.ptr{background:var(--s2);border:1px solid var(--br);border-radius:50px;height:8px;overflow:hidden}
+.pb{height:100%;width:0%;border-radius:50px;transition:width .5s cubic-bezier(.4,0,.2,1);background:linear-gradient(90deg,var(--ac),var(--al),var(--go));position:relative;overflow:hidden}
+.pb::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,.35),transparent);animation:sh 1.5s infinite}
+@keyframes sh{0%{transform:translateX(-200%)}100%{transform:translateX(200%)}}
+.pst{display:flex;justify-content:space-between;margin-top:5px}
+.pst span{font-size:9px;color:var(--i2)}
+
+/* TRUST */
+.trust{display:flex;justify-content:center;gap:10px;margin-top:22px;flex-wrap:wrap}
+.ti{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--i2);background:var(--s1);border:1px solid var(--br);border-radius:50px;padding:5px 12px}
+
+/* OVERLAY */
+.ov{position:fixed;inset:0;background:rgba(0,0,0,.85);backdrop-filter:blur(12px);z-index:9000;display:none;align-items:center;justify-content:center;padding:20px}
+.ov.on{display:flex;animation:fo .25s ease}
+@keyframes fo{from{opacity:0}to{opacity:1}}
+.pop{background:var(--s1);border:1px solid var(--br);border-radius:20px;padding:36px 30px 28px;max-width:460px;width:100%;text-align:center;box-shadow:0 16px 56px rgba(0,0,0,.8);position:relative;animation:pu .35s cubic-bezier(.175,.885,.32,1.275) both}
+.pop::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(124,106,247,.5),transparent)}
+@keyframes pu{from{opacity:0;transform:scale(.88) translateY(16px)}to{opacity:1;transform:none}}
+.pcls{position:absolute;top:14px;right:14px;background:var(--s2);border:1px solid var(--br);border-radius:50%;width:30px;height:30px;cursor:pointer;font-size:13px;color:var(--i2);display:flex;align-items:center;justify-content:center;transition:all .2s;line-height:1}
+.pcls:hover{background:var(--br);color:var(--ink)}
+.pico{width:64px;height:64px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:26px;margin:0 auto 14px}
+.ptit{font-family:'Syne',sans-serif;font-size:22px;font-weight:800;letter-spacing:-.5px;margin-bottom:8px}
+.psub{font-size:13px;color:var(--i2);line-height:1.65;margin-bottom:18px}
+.pcard{background:var(--s2);border:1px solid var(--br);border-radius:12px;padding:16px;text-align:left;margin-bottom:16px}
+.pct{font-size:9px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--i2);margin-bottom:12px}
+.pfs{display:flex;flex-direction:column;gap:10px}
+.piw{position:relative}
+.pii{position:absolute;left:11px;top:50%;transform:translateY(-50%);font-size:13px;pointer-events:none}
+.pi{width:100%;background:var(--bg);border:1.5px solid var(--br);border-radius:10px;padding:11px 11px 11px 34px;font-family:'DM Sans',sans-serif;font-size:13px;color:var(--ink);outline:none;transition:all .2s}
+.pi:focus{border-color:var(--ac)}.pi::placeholder{color:#35354a}
+.pfi{display:none;background:rgba(74,247,160,.06);border:1px solid rgba(74,247,160,.25);border-radius:10px;padding:10px 14px;align-items:center;gap:10px}
+.pfi.on{display:flex}
+.pbtn{width:100%;border:none;border-radius:10px;padding:14px;background:linear-gradient(135deg,var(--ac),#5a47e8);color:#fff;font-family:'Syne',sans-serif;font-size:15px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;transition:all .2s}
+.pbtn:hover:not(:disabled){transform:translateY(-1px);box-shadow:0 6px 20px rgba(124,106,247,.4)}
+.pbtn:disabled{opacity:.6;cursor:not-allowed}
+.psuc{display:none;padding:8px 0}.psuc.on{display:block}
+
+/* FOOTER */
+footer{background:#050509;border-top:1px solid var(--br);padding:48px 28px 24px;margin-top:80px}
+.fti{max-width:1100px;margin:0 auto}
+.fg{display:grid;grid-template-columns:2fr 1fr 1fr;gap:48px;margin-bottom:32px}
+.fd{font-size:13px;color:var(--i2);line-height:1.7;max-width:260px}
+.fc h4{font-size:9px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:rgba(255,255,255,.2);margin-bottom:12px}
+.fc a{display:block;font-size:13px;color:var(--i2);text-decoration:none;margin-bottom:7px;transition:color .2s}
+.fc a:hover{color:var(--ink)}
+.fbot{border-top:1px solid var(--br);padding-top:18px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px}
+.fcp{font-size:11.5px;color:rgba(255,255,255,.2)}
+
+@media(max-width:640px){
+  .row2{grid-template-columns:1fr}
+  .fmts{gap:8px}.trust{gap:8px}
+  .fg{grid-template-columns:1fr;gap:24px}
+  nav a{display:none}nav a.active{display:block}
+  .lw{margin-left:auto}
+}
+</style>
+</head><body>
+<div id="toast"></div>
+<header><div class="hd">
+  <a class="logo" href="index.html">Book<span>Convert</span></a>
+  <nav><a href="index.html" id="nav_home">Home</a>
+<a href="about.html" id="nav_about">About</a>
+<a href="blog.html" id="nav_blog">Blog</a>
+<a href="contact.html"  class="active" id="nav_contact">Contact</a>
+
+    <div class="lw">
+      <button class="lt" id="lt" onclick="togglePanel()"><span>🌐</span><span id="cln">🇬🇧 English</span><span class="caret">▾</span></button>
+      <div class="lp" id="lp">
+        <div class="lgl">🌍 Africa / Middle East</div>
+        <div class="li" data-lang="ar"><span class="lf">🇸🇦</span> العربية <span class="ln">Arabic</span></div>
+        <div class="lgl">🌏 South / Southeast Asia</div>
+        <div class="li" data-lang="ur"><span class="lf">🇵🇰</span> اردو <span class="ln">Urdu</span></div>
+        <div class="li" data-lang="hi"><span class="lf">🇮🇳</span> हिंदी <span class="ln">Hindi</span></div>
+        <div class="li" data-lang="id"><span class="lf">🇮🇩</span> Indonesia <span class="ln">Indonesia</span></div>
+        <div class="li" data-lang="bn"><span class="lf">🇧🇩</span> বাংলা <span class="ln">Bengali</span></div>
+        <div class="lgl">🌏 East Asia</div>
+        <div class="li" data-lang="zh"><span class="lf">🇨🇳</span> 中文 <span class="ln">Chinese</span></div>
+        <div class="lgl">🌍 Europe &amp; Americas</div>
+        <div class="li" data-lang="en"><span class="lf">🇬🇧</span> English <span class="ln">English</span></div>
+        <div class="li" data-lang="fr"><span class="lf">🇫🇷</span> Français <span class="ln">French</span></div>
+        <div class="li" data-lang="de"><span class="lf">🇩🇪</span> Deutsch <span class="ln">German</span></div>
+        <div class="li" data-lang="es"><span class="lf">🇪🇸</span> Español <span class="ln">Spanish</span></div>
+        <div class="li" data-lang="it"><span class="lf">🇮🇹</span> Italiano <span class="ln">Italian</span></div>
+        <div class="li" data-lang="pt"><span class="lf">🇧🇷</span> Português <span class="ln">Portuguese</span></div></div>
+    </div>
+  </nav>
+</div></header>
+
+<div class="wrap">
+  <div class="hero con" style="animation:ri .7s ease both">
+    <div class="badge">📬 Contact</div>
+    <h1>Get In <em>Touch</em></h1>
+    <p class="hsub">We usually respond within a few hours.</p>
+  </div>
+  <div class="con" style="padding-bottom:80px">
+    <div class="card" style="max-width:260px;margin-bottom:14px;animation:ri .6s .1s ease both">
+      <div style="font-size:30px;margin-bottom:8px">✉️</div>
+      <div style="font-family:Syne,sans-serif;font-weight:700;margin-bottom:4px">Email</div>
+      <div style="color:var(--ac);font-size:13px">jpesan467@gmail.com</div>
+    </div>
+    <div class="card" style="animation:ri .6s .15s ease both">
+      <div class="sl">Send a Message</div>
+      <div class="iw" style="margin-bottom:12px"><span class="ico">👤</span><input type="text" id="cn" placeholder="Your full name"></div>
+      <div class="iw" style="margin-bottom:12px"><span class="ico">✉️</span><input type="email" id="ce" placeholder="Your email"></div>
+      <div style="margin-bottom:14px"><textarea id="cm" rows="5" placeholder="Your message…"></textarea></div>
+      <button class="btn bac" id="cb" onclick="sendMsg()" style="max-width:200px"><span>📨</span><span id="cbt">Send Message</span></button>
+    </div>
+  </div>
+</div>
+<div class="ov" id="cov" onclick="if(event.target===this)this.classList.remove('on')">
+  <div class="pop">
+    <button class="pcls" onclick="document.getElementById('cov').classList.remove('on')">✕</button>
+    <div class="pico" style="background:rgba(74,247,160,.1);border:1.5px solid rgba(74,247,160,.3)">📬</div>
+    <div class="ptit" style="color:var(--gn)">Message Sent!</div>
+    <p class="psub" style="margin-bottom:0">Thanks! We'll get back to you soon.</p>
+  </div>
+</div>
+<footer><div class="fti">
+  <div class="fg">
+    <div>
+      <a class="logo" href="index.html" style="display:block;margin-bottom:10px">Book<span>Convert</span></a>
+      <p class="fd" id="ft_desc">Professional Kindle book conversion. Fast, accurate, affordable.</p>
+    </div>
+    <div class="fc"><h4 id="ft_lh">Quick Links</h4>
+      <a href="index.html" id="ft_hl">Home</a><a href="about.html" id="ft_al">About</a>
+      <a href="blog.html" id="ft_bl">Blog</a><a href="contact.html" id="ft_cl">Contact</a>
+    </div>
+    <div class="fc"><h4 id="ft_leg">Legal</h4>
+      <a href="privacy.html">Privacy Policy</a><a href="terms.html">Terms of Service</a>
+    </div>
+  </div>
+  <div class="fbot"><span class="fcp" id="ft_cp">© 2026 BookConvert Pro. All rights reserved.</span></div>
+</div></footer>
+<script>
+const L = {
+  en: {dir:"ltr",name:"English",flag:"🇬🇧",
+    nav_home:'Home',nav_about:'About',nav_blog:'Blog',nav_contact:'Contact',
+    eyebrow:'Book Conversion Service',h1:'Convert Your Kindle Book',h1b:'to Word & PDF',sub:'Share your Amazon link — get a perfectly formatted document delivered fast.',
+    f_name:'Your Name',f_email:'Your Email',f_link:'Amazon / Kindle Book Link',
+    f_name_p:'Enter your full name',f_email_p:'Enter your email address',f_link_p:'Paste Amazon / Kindle link here…',
+    s2:'Output Format',s3:'Special Instructions',mp:'Any specific formatting, chapters, or notes…',
+    fw:'Word',fp:'PDF',fb:'Both',
+    be:'Convert Now',bf:'',
+    t1:'Fast Delivery',t2:'Secure & Private',t3:'Quality Guaranteed',t4:'Free Revisions',
+    sending:'Sending…',err_name:'Please enter your name!',err_email:'Please enter your email!',err_link:'Please paste the book link!',
+    pe:'🎉',pt:'Request Received!',ps:"We'll convert your book and email it to you fast!",pb:'',
+    footer_desc:'Professional Kindle book conversion service. Fast, accurate, and affordable.',footer_links:'Quick Links',footer_legal:'Legal',footer_disclaimer:'Disclaimer',footer_copy:'© 2026 BookConvert Pro. All rights reserved.'
+  },
+  de: {dir:"ltr",name:"Deutsch",flag:"🇩🇪",
+    nav_home:'Startseite',nav_about:'Über uns',nav_blog:'Blog',nav_contact:'Kontakt',
+    eyebrow:'Buchkonvertierungsservice',h1:'Kindle-Buch konvertieren',h1b:'zu Word & PDF',sub:'Amazon-Link teilen — professionell formatiertes Dokument schnell erhalten.',
+    f_name:'Ihr Name',f_email:'Ihre E-Mail',f_link:'Amazon / Kindle Buchlink',
+    f_name_p:'Vollständigen Namen eingeben',f_email_p:'E-Mail-Adresse eingeben',f_link_p:'Amazon / Kindle-Link einfügen…',
+    s2:'Ausgabeformat',s3:'Besondere Anweisungen',mp:'Spezielle Formatierung oder Notizen…',
+    fw:'Word',fp:'PDF',fb:'Beides',
+    be:'Jetzt Konvertieren',bf:'',
+    t1:'Schnelle Lieferung',t2:'Sicher & Privat',t3:'Qualität garantiert',t4:'Kostenlose Überarbeitungen',
+    sending:'Wird gesendet…',err_name:'Bitte Namen eingeben!',err_email:'Bitte E-Mail eingeben!',err_link:'Bitte Link einfügen!',
+    pe:'🎉',pt:'Anfrage erhalten!',ps:'Wir konvertieren Ihr Buch und senden es schnell per E-Mail!',pb:'',
+    footer_desc:'Professioneller Kindle-Buchkonvertierungsservice. Schnell, genau und erschwinglich.',footer_links:'Schnelllinks',footer_legal:'Rechtliches',footer_disclaimer:'Haftungsausschluss',footer_copy:'© 2026 BookConvert Pro. Alle Rechte vorbehalten.'
+  },
+  fr: {dir:"ltr",name:"Français",flag:"🇫🇷",
+    nav_home:'Accueil',nav_about:'À propos',nav_blog:'Blog',nav_contact:'Contact',
+    eyebrow:'Service de Conversion de Livres',h1:'Convertissez votre Kindle',h1b:'en Word et PDF',sub:'Partagez votre lien Amazon — recevez un document parfaitement formaté rapidement.',
+    f_name:'Votre nom',f_email:'Votre e-mail',f_link:'Lien Amazon / Kindle',
+    f_name_p:'Entrez votre nom complet',f_email_p:'Entrez votre adresse e-mail',f_link_p:'Collez le lien Amazon / Kindle…',
+    s2:'Format de sortie',s3:'Instructions spéciales',mp:'Mise en forme ou notes spécifiques…',
+    fw:'Word',fp:'PDF',fb:'Les deux',
+    be:'Convertir Maintenant',bf:'',
+    t1:'Livraison rapide',t2:'Sécurisé & Privé',t3:'Qualité garantie',t4:'Révisions gratuites',
+    sending:'Envoi…',err_name:'Veuillez entrer votre nom !',err_email:'Veuillez entrer votre e-mail !',err_link:'Veuillez coller le lien !',
+    pe:'🎉',pt:'Demande reçue !',ps:"Nous convertirons votre livre et vous l'enverrons rapidement !",pb:'',
+    footer_desc:'Service professionnel de conversion Kindle. Rapide, précis et abordable.',footer_links:'Liens rapides',footer_legal:'Mentions légales',footer_disclaimer:'Avertissement',footer_copy:'© 2026 BookConvert Pro. Tous droits réservés.'
+  },
+  es: {dir:"ltr",name:"Español",flag:"🇪🇸",
+    nav_home:'Inicio',nav_about:'Acerca de',nav_blog:'Blog',nav_contact:'Contacto',
+    eyebrow:'Servicio de Conversión de Libros',h1:'Convierte tu Kindle',h1b:'a Word y PDF',sub:'Comparte tu enlace de Amazon — recibe un documento perfectamente formateado rápido.',
+    f_name:'Tu nombre',f_email:'Tu correo',f_link:'Enlace Amazon / Kindle',
+    f_name_p:'Ingresa tu nombre completo',f_email_p:'Ingresa tu correo electrónico',f_link_p:'Pega el enlace de Amazon / Kindle…',
+    s2:'Formato de salida',s3:'Instrucciones especiales',mp:'Formato específico o notas…',
+    fw:'Word',fp:'PDF',fb:'Ambos',
+    be:'Convertir Ahora',bf:'',
+    t1:'Entrega rápida',t2:'Seguro y Privado',t3:'Calidad garantizada',t4:'Revisiones gratis',
+    sending:'Enviando…',err_name:'¡Ingresa tu nombre!',err_email:'¡Ingresa tu correo!',err_link:'¡Pega el enlace!',
+    pe:'🎉',pt:'¡Solicitud recibida!',ps:'¡Convertiremos tu libro y te lo enviaremos rápido!',pb:'',
+    footer_desc:'Servicio profesional de conversión Kindle. Rápido, preciso y asequible.',footer_links:'Enlaces rápidos',footer_legal:'Legal',footer_disclaimer:'Descargo de responsabilidad',footer_copy:'© 2026 BookConvert Pro. Todos los derechos reservados.'
+  },
+  pt: {dir:"ltr",name:"Português",flag:"🇧🇷",
+    nav_home:'Início',nav_about:'Sobre nós',nav_blog:'Blog',nav_contact:'Contato',
+    eyebrow:'Serviço de Conversão de Livros',h1:'Converta seu Kindle',h1b:'para Word e PDF',sub:'Compartilhe o link da Amazon — receba um documento perfeitamente formatado rápido.',
+    f_name:'Seu nome',f_email:'Seu e-mail',f_link:'Link Amazon / Kindle',
+    f_name_p:'Digite seu nome completo',f_email_p:'Digite seu endereço de e-mail',f_link_p:'Cole o link Amazon / Kindle…',
+    s2:'Formato de saída',s3:'Instruções especiais',mp:'Formatação especial ou observações…',
+    fw:'Word',fp:'PDF',fb:'Ambos',
+    be:'Converter Agora',bf:'',
+    t1:'Entrega rápida',t2:'Seguro e Privado',t3:'Qualidade garantida',t4:'Revisões gratuitas',
+    sending:'Enviando…',err_name:'Digite seu nome!',err_email:'Digite seu e-mail!',err_link:'Cole o link!',
+    pe:'🎉',pt:'Pedido recebido!',ps:'Converteremos seu livro e enviaremos rapidamente!',pb:'',
+    footer_desc:'Serviço profissional de conversão Kindle. Rápido, preciso e acessível.',footer_links:'Links rápidos',footer_legal:'Legal',footer_disclaimer:'Aviso legal',footer_copy:'© 2026 BookConvert Pro. Todos os direitos reservados.'
+  },
+  it: {dir:"ltr",name:"Italiano",flag:"🇮🇹",
+    nav_home:'Home',nav_about:'Chi siamo',nav_blog:'Blog',nav_contact:'Contatti',
+    eyebrow:'Servizio di Conversione Libri',h1:'Converti il tuo Kindle',h1b:'in Word e PDF',sub:'Condividi il link Amazon — ricevi un documento formattato professionalmente velocemente.',
+    f_name:'Il tuo nome',f_email:'La tua email',f_link:'Link Amazon / Kindle',
+    f_name_p:'Inserisci il tuo nome completo',f_email_p:'Inserisci il tuo indirizzo email',f_link_p:'Incolla il link Amazon / Kindle…',
+    s2:'Formato di output',s3:'Istruzioni speciali',mp:'Formattazione specifica o note…',
+    fw:'Word',fp:'PDF',fb:'Entrambi',
+    be:'Converti Ora',bf:'',
+    t1:'Consegna rapida',t2:'Sicuro e Privato',t3:'Qualità garantita',t4:'Revisioni gratuite',
+    sending:'Invio…',err_name:'Inserisci il tuo nome!',err_email:'Inserisci la tua email!',err_link:'Incolla il link!',
+    pe:'🎉',pt:'Richiesta ricevuta!',ps:'Convertiremo il tuo libro e te lo invieremo velocemente!',pb:'',
+    footer_desc:'Servizio professionale di conversione Kindle. Veloce, preciso e conveniente.',footer_links:'Link rapidi',footer_legal:'Legale',footer_disclaimer:'Avvertenza',footer_copy:'© 2026 BookConvert Pro. Tutti i diritti riservati.'
+  },
+  ur: {dir:"rtl",name:"اردو",flag:"🇵🇰",
+    nav_home:'ہوم',nav_about:'ہمارے بارے میں',nav_blog:'بلاگ',nav_contact:'رابطہ',
+    eyebrow:'کتاب کنورژن سروس',h1:'اپنی کنڈل کتاب بدلیں',h1b:'ورڈ اور پی ڈی ایف میں',sub:'ایمازون لنک شیئر کریں — پیشہ ورانہ دستاویز تیزی سے حاصل کریں۔',
+    f_name:'آپ کا نام',f_email:'آپ کی ای میل',f_link:'ایمازون / کنڈل لنک',
+    f_name_p:'اپنا پورا نام درج کریں',f_email_p:'اپنی ای میل درج کریں',f_link_p:'ایمازون / کنڈل لنک یہاں پیسٹ کریں…',
+    s2:'آؤٹ پٹ فارمیٹ',s3:'خصوصی ہدایات',mp:'کوئی خاص ہدایات…',
+    fw:'ورڈ',fp:'پی ڈی ایف',fb:'دونوں',
+    be:'ابھی تبدیل کریں',bf:'',
+    t1:'تیز ترسیل',t2:'محفوظ',t3:'معیار ضمانت',t4:'مفت ترمیم',
+    sending:'بھیجا جا رہا ہے…',err_name:'اپنا نام درج کریں!',err_email:'اپنی ای میل درج کریں!',err_link:'لنک پیسٹ کریں!',
+    pe:'🎊',pt:'درخواست مل گئی!',ps:'ہم آپ کی کتاب کنورٹ کر کے ای میل کریں گے!',pb:'',
+    footer_desc:'پیشہ ورانہ کنڈل کتاب کنورژن سروس۔ تیز، درست اور سستی۔',footer_links:'فوری لنکس',footer_legal:'قانونی',footer_disclaimer:'دستبرداری',footer_copy:'© 2026 BookConvert Pro. جملہ حقوق محفوظ ہیں۔'
+  },
+  ar: {dir:"rtl",name:"العربية",flag:"🇸🇦",
+    nav_home:'الرئيسية',nav_about:'من نحن',nav_blog:'المدونة',nav_contact:'اتصل بنا',
+    eyebrow:'خدمة تحويل الكتب',h1:'حوّل كتاب كيندل',h1b:'إلى Word وPDF',sub:'شارك رابط أمازون — احصل على مستند منسق احترافياً بسرعة.',
+    f_name:'اسمك',f_email:'بريدك الإلكتروني',f_link:'رابط أمازون / كيندل',
+    f_name_p:'أدخل اسمك الكامل',f_email_p:'أدخل بريدك الإلكتروني',f_link_p:'الصق رابط أمازون / كيندل هنا…',
+    s2:'صيغة الإخراج',s3:'تعليمات خاصة',mp:'تنسيق خاص أو ملاحظات…',
+    fw:'ورد',fp:'PDF',fb:'كلاهما',
+    be:'تحويل الآن',bf:'',
+    t1:'تسليم سريع',t2:'آمن وخاص',t3:'جودة مضمونة',t4:'مراجعات مجانية',
+    sending:'جارٍ الإرسال…',err_name:'أدخل اسمك!',err_email:'أدخل بريدك الإلكتروني!',err_link:'الصق الرابط!',
+    pe:'🎊',pt:'تم استلام طلبك!',ps:'سنحوّل كتابك ونرسله إليك بسرعة!',pb:'',
+    footer_desc:'خدمة تحويل كتب كيندل الاحترافية. سريعة ودقيقة وبأسعار معقولة.',footer_links:'روابط سريعة',footer_legal:'قانوني',footer_disclaimer:'إخلاء المسؤولية',footer_copy:'© 2026 BookConvert Pro. جميع الحقوق محفوظة.'
+  },
+  hi: {dir:"ltr",name:"हिंदी",flag:"🇮🇳",
+    nav_home:'होम',nav_about:'हमारे बारे में',nav_blog:'ब्लॉग',nav_contact:'संपर्क',
+    eyebrow:'बुक कनवर्ज़न सेवा',h1:'अपनी Kindle किताब बदलें',h1b:'Word और PDF में',sub:'Amazon लिंक शेयर करें — प्रोफेशनल फॉर्मेट में दस्तावेज़ जल्दी पाएं।',
+    f_name:'आपका नाम',f_email:'आपकी ईमेल',f_link:'Amazon / Kindle लिंक',
+    f_name_p:'अपना पूरा नाम दर्ज करें',f_email_p:'अपनी ईमेल दर्ज करें',f_link_p:'यहाँ Amazon/Kindle लिंक पेस्ट करें…',
+    s2:'आउटपुट फॉर्मेट',s3:'विशेष निर्देश',mp:'कोई फॉर्मेटिंग या नोट्स…',
+    fw:'Word',fp:'PDF',fb:'दोनों',
+    be:'अभी कनवर्ट करें',bf:'',
+    t1:'तेज़ डिलीवरी',t2:'सुरक्षित और निजी',t3:'गुणवत्ता गारंटी',t4:'मुफ़्त संशोधन',
+    sending:'भेजा जा रहा है…',err_name:'अपना नाम दर्ज करें!',err_email:'अपनी ईमेल दर्ज करें!',err_link:'लिंक पेस्ट करें!',
+    pe:'🎉',pt:'अनुरोध मिल गया!',ps:'हम आपकी किताब कन्वर्ट करके ईमेल करेंगे!',pb:'',
+    footer_desc:'प्रोफेशनल Kindle बुक कनवर्ज़न सेवा। तेज़, सटीक और किफ़ायती।',footer_links:'त्वरित लिंक',footer_legal:'कानूनी',footer_disclaimer:'अस्वीकरण',footer_copy:'© 2026 BookConvert Pro. सर्वाधिकार सुरक्षित।'
+  },
+  id: {dir:"ltr",name:"Indonesia",flag:"🇮🇩",
+    nav_home:'Beranda',nav_about:'Tentang',nav_blog:'Blog',nav_contact:'Kontak',
+    eyebrow:'Layanan Konversi Buku',h1:'Konversi Buku Kindle',h1b:'ke Word & PDF',sub:'Bagikan tautan Amazon — dapatkan dokumen terformat dengan cepat.',
+    f_name:'Nama Anda',f_email:'Email Anda',f_link:'Tautan Amazon / Kindle',
+    f_name_p:'Masukkan nama lengkap Anda',f_email_p:'Masukkan alamat email Anda',f_link_p:'Tempel tautan Amazon / Kindle di sini…',
+    s2:'Format Output',s3:'Instruksi Khusus',mp:'Format khusus atau catatan…',
+    fw:'Word',fp:'PDF',fb:'Keduanya',
+    be:'Konversi Sekarang',bf:'',
+    t1:'Pengiriman Cepat',t2:'Aman & Privat',t3:'Kualitas Terjamin',t4:'Revisi Gratis',
+    sending:'Mengirim…',err_name:'Masukkan nama Anda!',err_email:'Masukkan email Anda!',err_link:'Tempel tautan buku!',
+    pe:'🎉',pt:'Permintaan Diterima!',ps:'Kami akan mengonversi buku Anda dan mengirimkannya dengan cepat!',pb:'',
+    footer_desc:'Layanan konversi buku Kindle profesional. Cepat, akurat, dan terjangkau.',footer_links:'Tautan Cepat',footer_legal:'Legal',footer_disclaimer:'Penafian',footer_copy:'© 2026 BookConvert Pro. Hak cipta dilindungi.'
+  },
+  zh: {dir:"ltr",name:"中文",flag:"🇨🇳",
+    nav_home:'首页',nav_about:'关于我们',nav_blog:'博客',nav_contact:'联系我们',
+    eyebrow:'书籍转换服务',h1:'转换您的Kindle书籍',h1b:'为Word和PDF格式',sub:'分享Amazon链接 — 快速获得专业格式文档。',
+    f_name:'您的姓名',f_email:'您的邮箱',f_link:'Amazon / Kindle链接',
+    f_name_p:'输入您的全名',f_email_p:'输入您的邮箱地址',f_link_p:'在此粘贴Amazon/Kindle链接…',
+    s2:'输出格式',s3:'特殊要求',mp:'特殊格式或备注…',
+    fw:'Word',fp:'PDF',fb:'两者都要',
+    be:'立即转换',bf:'',
+    t1:'快速交付',t2:'安全私密',t3:'质量保证',t4:'免费修改',
+    sending:'发送中…',err_name:'请输入您的姓名！',err_email:'请输入您的邮箱！',err_link:'请粘贴链接！',
+    pe:'🎉',pt:'已收到请求！',ps:'我们将转换您的书并快速发送给您！',pb:'',
+    footer_desc:'专业Kindle书籍转换服务。快速、准确、实惠。',footer_links:'快速链接',footer_legal:'法律信息',footer_disclaimer:'免责声明',footer_copy:'© 2026 BookConvert Pro. 版权所有。'
+  },
+  bn: {dir:"ltr",name:"বাংলা",flag:"🇧🇩",
+    nav_home:'হোম',nav_about:'আমাদের সম্পর্কে',nav_blog:'ব্লগ',nav_contact:'যোগাযোগ',
+    eyebrow:'বই রূপান্তর সেবা',h1:'আপনার Kindle বই রূপান্তর করুন',h1b:'Word ও PDF-এ',sub:'Amazon লিঙ্ক শেয়ার করুন — দ্রুত পেশাদার ডকুমেন্ট পান।',
+    f_name:'আপনার নাম',f_email:'আপনার ইমেইল',f_link:'Amazon / Kindle লিঙ্ক',
+    f_name_p:'আপনার পূর্ণ নাম লিখুন',f_email_p:'আপনার ইমেইল ঠিকানা লিখুন',f_link_p:'এখানে Amazon/Kindle লিঙ্ক পেস্ট করুন…',
+    s2:'আউটপুট ফরম্যাট',s3:'বিশেষ নির্দেশনা',mp:'বিশেষ ফরম্যাটিং বা নোট…',
+    fw:'Word',fp:'PDF',fb:'উভয়',
+    be:'এখনই রূপান্তর করুন',bf:'',
+    t1:'দ্রুত ডেলিভারি',t2:'নিরাপদ ও ব্যক্তিগত',t3:'মান নিশ্চিত',t4:'বিনামূল্যে সংশোধন',
+    sending:'পাঠানো হচ্ছে…',err_name:'আপনার নাম লিখুন!',err_email:'আপনার ইমেইল লিখুন!',err_link:'লিঙ্ক পেস্ট করুন!',
+    pe:'🎉',pt:'অনুরোধ পেয়েছি!',ps:'আমরা আপনার বই রূপান্তর করে ইমেইল করব!',pb:'',
+    footer_desc:'পেশাদার Kindle বই রূপান্তর সেবা। দ্রুত, নির্ভুল এবং সাশ্রয়ী।',footer_links:'দ্রুত লিঙ্ক',footer_legal:'আইনি',footer_disclaimer:'দায়বর্জন',footer_copy:'© 2026 BookConvert Pro. সর্বস্বত্ব সংরক্ষিত।'
+  }
+};
+let cur='en';
+function toast(msg,good){var t=document.getElementById('toast');t.textContent=msg;t.style.background=good?'var(--gn)':'var(--rd)';t.style.color=good?'#000':'#fff';t.classList.add('on');clearTimeout(window._tt);window._tt=setTimeout(function(){t.classList.remove('on');},3000);}
+function validEm(e){return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e);}
+function tx(id,v){var e=document.getElementById(id);if(e)e.textContent=v;}
+function ph(id,v){var e=document.getElementById(id);if(e)e.placeholder=v;}
+function applyLang(code){
+  if(!L[code])code='en';cur=code;var l=L[code];
+  document.documentElement.lang=code;document.documentElement.dir=l.dir;document.body.dir=l.dir;
+  document.title=l.h1+' | BookConvert Pro';
+  tx('cln',l.flag+' '+l.name);
+  tx('nav_home',l.nav_home);tx('nav_about',l.nav_about);tx('nav_blog',l.nav_blog);tx('nav_contact',l.nav_contact);
+  tx('ft_desc',l.footer_desc);tx('ft_lh',l.footer_links);tx('ft_leg',l.footer_legal);tx('ft_cp',l.footer_copy);
+  tx('ft_hl',l.nav_home);tx('ft_al',l.nav_about);tx('ft_bl',l.nav_blog);tx('ft_cl',l.nav_contact);
+  document.querySelectorAll('.li[data-lang]').forEach(function(el){el.classList.toggle('active',el.dataset.lang===code);});
+  try{var u=new URL(window.location);u.searchParams.set('lang',code);window.history.replaceState({},'',u);}catch(e){}
+  if(typeof pageT==='function')pageT(l);
+}
+function getLang(){var p=new URLSearchParams(window.location.search).get('lang');var b=p||navigator.language.split('-')[0];return L[b]?b:'en';}
+function togglePanel(){document.getElementById('lp').classList.toggle('open');document.getElementById('lt').classList.toggle('open');}
+document.querySelectorAll('.li[data-lang]').forEach(function(el){el.addEventListener('click',function(){applyLang(el.dataset.lang);document.getElementById('lp').classList.remove('open');document.getElementById('lt').classList.remove('open');});});
+document.addEventListener('click',function(e){if(!e.target.closest('.lw')){document.getElementById('lp').classList.remove('open');document.getElementById('lt').classList.remove('open');}});
+function pageT(l){tx('ft_desc',l.footer_desc);}
+async function sendMsg(){
+  var name=document.getElementById('cn').value.trim();
+  var email=document.getElementById('ce').value.trim();
+  var msg=document.getElementById('cm').value.trim();
+  if(!name){toast('⚠️ Please enter your name');return;}
+  if(!email||!validEm(email)){toast('⚠️ Please enter a valid email');return;}
+  if(!msg){toast('⚠️ Please enter your message');return;}
+  var btn=document.getElementById('cb');btn.disabled=true;tx('cbt','Sending…');
+  try{
+    var fd=new FormData();
+    fd.append('access_key','79e44db0-375d-4f45-86a6-121022a0b55a');fd.append('subject','Contact — '+name);
+    fd.append('name',name);fd.append('email',email);fd.append('message',msg);
+    var r=await fetch('https://api.web3forms.com/submit',{method:'POST',body:fd});
+    var d=await r.json();
+    if(d.success)document.getElementById('cov').classList.add('on');
+    else toast('⚠️ Error. Please try again.');
+  }catch(e){toast('⚠️ Network error.');}
+  btn.disabled=false;tx('cbt','Send Message');
+}
+applyLang(getLang());
+</script></body></html>
